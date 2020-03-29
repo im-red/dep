@@ -122,7 +122,7 @@ main() {
         echo -n "[$i/${FILE_NUM}] Scanning ${filepath} ... "
 
         filename="$(echo "${filepath}" | awk -F'/' '{print $NF}')"
-        include_list="$(sed -ne 's/^\s*#include\s*<\(.*\)>\s*$/\1/p; s/^\s*#include\s*\"\(.*\)\"\s*$/\1/p' "${filepath}")"
+        include_list="$(cpp -fpreprocessed "${filepath}" | sed -ne 's/^\s*#include\s*<\(.*\)>\s*$/\1/p; s/^\s*#include\s*\"\(.*\)\"\s*$/\1/p')"
 
         for include_path in ${include_list}; do
             include_name="$(echo "${include_path}" | awk -F'/' '{print $NF}')"
